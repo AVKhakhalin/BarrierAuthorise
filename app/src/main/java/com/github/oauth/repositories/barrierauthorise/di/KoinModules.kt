@@ -4,6 +4,7 @@ import com.github.oauth.repositories.barrierauthorise.navigator.AppScreens
 import com.github.oauth.repositories.barrierauthorise.navigator.AppScreensImpl
 import com.github.oauth.repositories.barrierauthorise.utils.CICERONE_NAME
 import com.github.oauth.repositories.barrierauthorise.utils.network.NetworkStatus
+import com.github.oauth.repositories.barrierauthorise.utils.resources.ResourcesProviderImpl
 import com.github.terrakok.cicerone.Cicerone
 import com.github.terrakok.cicerone.NavigatorHolder
 import com.github.terrakok.cicerone.Router
@@ -22,6 +23,8 @@ val application = module {
     // Вспомогательные классы:
     // Определение статуса сети
     single<NetworkStatus> { NetworkStatus(androidContext()) }
+    // Получение доступа к ресурсам
+    single<ResourcesProviderImpl> { ResourcesProviderImpl(androidContext()) }
 }
 
 val screens = module {
