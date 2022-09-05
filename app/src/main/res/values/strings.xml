@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">BarrierAuthorise</string>
+    <string name="create_new_user_text">СОЗДАТЬ нового пользователя</string>
+    <string name="authorise_user_text">АВТОРИЗОВАТЬ пользователя</string>
 </resources>
