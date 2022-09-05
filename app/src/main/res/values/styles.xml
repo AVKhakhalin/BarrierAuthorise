@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <style name="input_text_layouts">
+        <item name="boxStrokeErrorColor">@color/red</item>
+        <item name="errorIconTint">@color/red</item>
+        <item name="errorTextColor">@color/red</item>
+    </style>
+    <style name="input_text_fields">
+        <item name="android:background">?attr/colorPrimary</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColorHint">@color/white</item>
+        <item name="android:layout_margin">8dp</item>
+        <item name="android:gravity">center</item>
+    </style>
+</resources>
