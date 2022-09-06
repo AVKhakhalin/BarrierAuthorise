@@ -2,7 +2,6 @@ package com.github.oauth.repositories.barrierauthorise.view.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
 import com.github.oauth.repositories.barrierauthorise.R
 import com.github.oauth.repositories.barrierauthorise.databinding.ActivityMainBinding
 import com.github.oauth.repositories.barrierauthorise.navigator.BackButtonListener
@@ -26,10 +25,7 @@ class MainActivity: AppCompatActivity() {
     // Навигация
     private val navigator = AppNavigator(this@MainActivity, R.id.fragments_container)
     private val navigatorHolder: NavigatorHolder = KoinJavaComponent.getKoin().get()
-    // Кнопка перехода на окна с регистрацией нового пользователя
-    private lateinit var createUserButton: Button
-    // Кнопка перехода на окна с аутентификацией существующего пользователя
-    private lateinit var authoriseUserButton: Button
+    private var isOnlyOneFragmentExist: Boolean = false
     //endregion
 
     override fun onDestroy() {
@@ -44,12 +40,13 @@ class MainActivity: AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         // Инициализация ViewModel
         initViewModel()
-        // Инициализация кнопок
-        initButtons()
         // Отслеживание первого или последующего запусков MainActivity
         if (savedInstanceState != null) {
             // Установка текущего экрана приложения
             navigatorHolder.setNavigator(navigator)
+        } else {
+            // Установка начального экрана приложения
+            viewModel.router.navigateTo(viewModel.screens.startButtonsScreen())
         }
         // Отображение содержимого окна
         setContentView(binding.root)
@@ -74,8 +71,9 @@ class MainActivity: AppCompatActivity() {
         navigatorHolder.removeNavigator()
     }
     override fun onBackPressed() {
-//        // Закрыть активити, если в настоящий момент открыт только один фрагмент
-//        if (supportFragmentManager.fragments.size == 1) finish()
+        // Закрыть активити, если в настоящий момент открыт только один фрагмент
+        if (isOnlyOneFragmentExist) finish()
+        isOnlyOneFragmentExist = supportFragmentManager.fragments.size == 1
         supportFragmentManager.fragments.forEach {
             if (it is BackButtonListener && it.backPressed()) {
                 return
@@ -84,14 +82,4 @@ class MainActivity: AppCompatActivity() {
         viewModel.router.exit()
     }
     //endregion
-
-    // Инициализация кнопок
-    private fun initButtons() {
-        createUserButton = binding.createNewUser.also {
-            it.setOnClickListener {
-                viewModel.router.navigateTo(viewModel.screens.createUserScreen())
-            }
-        }
-        authoriseUserButton = binding.authoriseUser
-    }
 }

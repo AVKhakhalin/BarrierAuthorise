@@ -1,12 +1,10 @@
 package com.github.oauth.repositories.barrierauthorise.repository.datasource
 
-import android.util.Log
 import com.github.oauth.repositories.barrierauthorise.model.data.InputtedUserData
 import com.github.oauth.repositories.barrierauthorise.model.data.ReceivedUserData
 import com.github.oauth.repositories.barrierauthorise.repository.api.ApiService
 import com.github.oauth.repositories.barrierauthorise.repository.api.BaseInterceptor
 import com.github.oauth.repositories.barrierauthorise.utils.BASE_API_URL
-import com.github.oauth.repositories.barrierauthorise.utils.LOG_TAG
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
