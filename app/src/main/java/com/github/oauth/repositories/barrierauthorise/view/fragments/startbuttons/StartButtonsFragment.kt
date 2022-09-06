@@ -7,6 +7,7 @@ import android.widget.Button
 import com.github.oauth.repositories.barrierauthorise.databinding.FragmentStartButtonsBinding
 import com.github.oauth.repositories.barrierauthorise.model.base.BaseFragment
 import com.github.oauth.repositories.barrierauthorise.utils.START_BUTTONS_FRAGMENT_SCOPE
+import com.github.oauth.repositories.barrierauthorise.view.activity.MainActivity
 import org.koin.core.qualifier.named
 import org.koin.core.scope.Scope
 import org.koin.java.KoinJavaComponent
@@ -63,11 +64,13 @@ class StartButtonsFragment:
         createUserButton = binding.createNewUser.also {
             it.setOnClickListener {
                 viewModel.router.navigateTo(viewModel.screens.createUserScreen())
+                (requireActivity() as MainActivity).setIsOnlyOneFragmentExist(false)
             }
         }
         authoriseUserButton = binding.authoriseUser.also {
             it.setOnClickListener {
                 viewModel.router.navigateTo(viewModel.screens.authoriseUserScreen())
+                (requireActivity() as MainActivity).setIsOnlyOneFragmentExist(false)
             }
         }
     }
