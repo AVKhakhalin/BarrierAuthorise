@@ -5,4 +5,8 @@
     <string name="first_name_layout_textfield_hint">Имя</string>
     <string name="email_textfield_hint">E-mail</string>
     <string name="password_textfield_hint">Пароль</string>
+
+    <!-- Errors   -->
+    <string name="error_needs_internet_connection">Нужно установить связь с Интернетом</string>
+    <string name="help_needs_internet_connection">Для регистрации нового пользователя , пожалуйста, установите связь с Интернетом</string>
 </resources>
