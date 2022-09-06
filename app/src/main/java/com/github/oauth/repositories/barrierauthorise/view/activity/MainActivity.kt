@@ -1,7 +1,7 @@
 package com.github.oauth.repositories.barrierauthorise.view.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.github.oauth.repositories.barrierauthorise.R
 import com.github.oauth.repositories.barrierauthorise.databinding.ActivityMainBinding
 import com.github.oauth.repositories.barrierauthorise.navigator.BackButtonListener

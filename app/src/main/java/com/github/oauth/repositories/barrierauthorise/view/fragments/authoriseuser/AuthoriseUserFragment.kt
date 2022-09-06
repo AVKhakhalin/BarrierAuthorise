@@ -1,42 +1,40 @@
-package com.github.oauth.repositories.barrierauthorise.view.fragments.createuser
+package com.github.oauth.repositories.barrierauthorise.view.fragments.authoriseuser
 
 import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
-import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
 import com.github.oauth.repositories.barrierauthorise.R
-import com.github.oauth.repositories.barrierauthorise.databinding.FragmentCreateUserBinding
+import com.github.oauth.repositories.barrierauthorise.databinding.FragmentAuthoriseUserBinding
 import com.github.oauth.repositories.barrierauthorise.model.base.BaseFragment
 import com.github.oauth.repositories.barrierauthorise.model.data.AppState
 import com.github.oauth.repositories.barrierauthorise.model.data.InputtedUserData
 import com.github.oauth.repositories.barrierauthorise.repository.settings.Settings
-import com.github.oauth.repositories.barrierauthorise.utils.CREATE_USER_FRAGMENT_SCOPE
+import com.github.oauth.repositories.barrierauthorise.utils.AUTHORISE_USER_FRAGMENT_SCOPE
 import org.koin.core.qualifier.named
 import org.koin.core.scope.Scope
 import org.koin.java.KoinJavaComponent
 
-class CreateUserFragment:
-    BaseFragment<FragmentCreateUserBinding>(FragmentCreateUserBinding::inflate) {
+class AuthoriseUserFragment:
+    BaseFragment<FragmentAuthoriseUserBinding>(FragmentAuthoriseUserBinding::inflate) {
     /** Задание переменных */ //region
     // ViewModel
-    private lateinit var viewModel: CreateUserFragmentViewModel
+    private lateinit var viewModel: AuthoriseUserFragmentViewModel
     // CreateUserFragmentScope
-    private lateinit var showCreateUserFragmentScope: Scope
+    private lateinit var showAuthoriseUserFragmentScope: Scope
     // Поля для ввода данных о пользователе
-    private lateinit var firstName: EditText
+    private lateinit var login: EditText
     private lateinit var email: EditText
-    private lateinit var isAgreed: CheckBox
     private lateinit var password: EditText
     // Кнопка для отправки запроса на создание нового пользователя
-    private lateinit var createUserButton: Button
+    private lateinit var authoriseUserButton: Button
     // Класс для сохранения запроса
     private val settings: Settings = KoinJavaComponent.getKoin().get()
     // newInstance для данного класса
     companion object {
-        fun newInstance(): CreateUserFragment = CreateUserFragment()
+        fun newInstance(): AuthoriseUserFragment = AuthoriseUserFragment()
     }
     //endregion
 
@@ -44,13 +42,13 @@ class CreateUserFragment:
     override fun onAttach(context: Context) {
         super.onAttach(context)
         // Задание Scope для данного фрагмента
-        showCreateUserFragmentScope = KoinJavaComponent.getKoin().getOrCreateScope(
-            CREATE_USER_FRAGMENT_SCOPE, named(CREATE_USER_FRAGMENT_SCOPE)
+        showAuthoriseUserFragmentScope = KoinJavaComponent.getKoin().getOrCreateScope(
+            AUTHORISE_USER_FRAGMENT_SCOPE, named(AUTHORISE_USER_FRAGMENT_SCOPE)
         )
     }
     override fun onDetach() {
         // Удаление скоупа для данного фрагмента
-        showCreateUserFragmentScope.close()
+        showAuthoriseUserFragmentScope.close()
         super.onDetach()
     }
     //endregion
@@ -63,12 +61,12 @@ class CreateUserFragment:
         // Инициализация полей ввода исходной информации и кнопки для отправки запроса
         initFieldsAndSearchButton()
         // Инициализация кнопки для отправки запроса
-        initCreateUserButton()
+        initAuthoriseUserButton()
     }
 
     // Инициализация ViewModel
     private fun initViewModel() {
-        val _viewModel: CreateUserFragmentViewModel by showCreateUserFragmentScope.inject()
+        val _viewModel: AuthoriseUserFragmentViewModel by showAuthoriseUserFragmentScope.inject()
         viewModel = _viewModel
         // Подписка на ViewModel
         this.viewModel.subscribe().observe(viewLifecycleOwner) { renderData(it) }
@@ -76,13 +74,14 @@ class CreateUserFragment:
 
     private fun renderData(appState: AppState) {
         when (appState) {
-            is AppState.SuccessCreateNewUser -> {
+            is AppState.SuccessAuthoriseUser -> {
                 // Изменение внешнего вида фрагмента
                 binding.scrollLayout.visibility = View.VISIBLE
                 binding.progressbar.visibility = View.INVISIBLE
-                // Уведомление пользователя о том, что новый пользователь успешно создан
+                // Уведомление пользователя о том, что пользователь успешно авторизован
                 Toast.makeText(requireContext(),
-                    requireContext().getString(R.string.new_user_created), Toast.LENGTH_LONG).show()
+                    requireContext().getString(R.string.authorise_user_completed),
+                    Toast.LENGTH_LONG).show()
             }
             is AppState.Loading -> {
                 // Изменение внешнего вида фрагмента
@@ -102,25 +101,23 @@ class CreateUserFragment:
 
     // Инициализация полей ввода исходной информации и кнопки для отправки запроса
     private fun initFieldsAndSearchButton() {
-        firstName = binding.firstNameLayoutTextfield
+        login = binding.loginLayoutTextfield
         email = binding.emailTextfield
-        isAgreed = binding.isAgreedCheckbox
         password = binding.passwordTextfield
     }
 
     // Инициализация кнопки для отправки запроса
-    private fun initCreateUserButton() {
-        createUserButton = binding.createNewUserButton.also {
+    private fun initAuthoriseUserButton() {
+        authoriseUserButton = binding.authoriseUserButton.also {
             it.setOnClickListener {
                 val inputtedUserData: InputtedUserData = InputtedUserData()
-                inputtedUserData.firstName = firstName.text.toString()
+                inputtedUserData.firstName = login.text.toString()
                 inputtedUserData.email = email.text.toString()
-                inputtedUserData.isAgreed = isAgreed.isChecked
                 inputtedUserData.password = password.text.toString()
                 Toast.makeText(requireContext(), "${inputtedUserData.firstName}\n${
                     inputtedUserData.email}\n${inputtedUserData.isAgreed}\n${
-                        inputtedUserData.password}", Toast.LENGTH_LONG).show()
-                viewModel.createNewUser(inputtedUserData)
+                    inputtedUserData.password}", Toast.LENGTH_LONG).show()
+                viewModel.authoriseUser(inputtedUserData)
             }
         }
     }

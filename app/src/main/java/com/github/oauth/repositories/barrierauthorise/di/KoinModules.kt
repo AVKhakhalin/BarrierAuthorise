@@ -1,6 +1,7 @@
 package com.github.oauth.repositories.barrierauthorise.di
 
 import com.github.oauth.repositories.barrierauthorise.model.data.ReceivedUserData
+import com.github.oauth.repositories.barrierauthorise.model.data.ReceivedUserTokensData
 import com.github.oauth.repositories.barrierauthorise.navigator.AppScreens
 import com.github.oauth.repositories.barrierauthorise.navigator.AppScreensImpl
 import com.github.oauth.repositories.barrierauthorise.repository.Repository
@@ -11,6 +12,8 @@ import com.github.oauth.repositories.barrierauthorise.utils.*
 import com.github.oauth.repositories.barrierauthorise.utils.network.NetworkStatus
 import com.github.oauth.repositories.barrierauthorise.utils.resources.ResourcesProviderImpl
 import com.github.oauth.repositories.barrierauthorise.view.activity.MainActivityViewModel
+import com.github.oauth.repositories.barrierauthorise.view.fragments.authoriseuser.AuthoriseUserFragmentInteractor
+import com.github.oauth.repositories.barrierauthorise.view.fragments.authoriseuser.AuthoriseUserFragmentViewModel
 import com.github.oauth.repositories.barrierauthorise.view.fragments.createuser.CreateUserFragmentInteractor
 import com.github.oauth.repositories.barrierauthorise.view.fragments.createuser.CreateUserFragmentViewModel
 import com.github.oauth.repositories.barrierauthorise.view.fragments.startbuttons.StartButtonsFragmentViewModel
@@ -24,7 +27,7 @@ import org.koin.dsl.module
 
 val application = module {
     // Удалённый сервер (API)
-    single<Repository<ReceivedUserData>>(named(NAME_REMOTE)) {
+    single<Repository<ReceivedUserData, ReceivedUserTokensData>>(named(NAME_REMOTE)) {
         RepositoryImpl(RetrofitImpl())
     }
     // Локальное сохранение данных
@@ -70,6 +73,20 @@ val screens = module {
         }
         viewModel {
             CreateUserFragmentViewModel(getScope(CREATE_USER_FRAGMENT_SCOPE).get(), get())
+        }
+    }
+
+    // Scope для фрагмента с регистрацией нового пользователя
+    scope(named(AUTHORISE_USER_FRAGMENT_SCOPE)) {
+        scoped {
+            AuthoriseUserFragmentInteractor(
+                get(named(NAME_REMOTE)),
+                ResourcesProviderImpl(get()),
+                NetworkStatus(get())
+            )
+        }
+        viewModel {
+            AuthoriseUserFragmentViewModel(getScope(AUTHORISE_USER_FRAGMENT_SCOPE).get(), get())
         }
     }
 }
