@@ -16,5 +16,8 @@
     <string name="email_textfield_hint">E-mail</string>
     <string name="password_textfield_hint">Пароль</string>
     <string name="new_user_created">Новый пользователь создан</string>
+    <string name="authorise_user_button_text">Авторизоватьcя</string>
+    <string name="login_name_layout_hint">Введите свой логин (имя)</string>
+    <string name="login_name_layout_helper_text">Логин</string>
 
 </resources>

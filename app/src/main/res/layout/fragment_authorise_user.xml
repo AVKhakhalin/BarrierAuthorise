@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/login_name_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/login_name_layout_hint"
+                android:paddingTop="@dimen/login_name_layout_padding_top"
+                android:layout_margin="@dimen/login_name_layout_margin"
+                app:counterEnabled="true"
+                app:counterMaxLength="50"
+                app:counterOverflowTextColor="?attr/colorSecondaryVariant"
+                app:endIconTint="@android:color/transparent"
+                app:helperText="@string/login_name_layout_helper_text">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/login_layout_textfield"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/password_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/password_layout_hint"
+                android:layout_margin="@dimen/password_layout_margin"
+                app:counterEnabled="true"
+                app:counterMaxLength="254"
+                app:counterOverflowTextColor="?attr/colorSecondaryVariant"
+                app:endIconMode="password_toggle"
+                app:endIconCheckable="true"
+                app:endIconTintMode="screen"
+                app:endIconTint="@android:color/transparent"
+                app:helperText="@string/password_textfield_hint">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/password_textfield"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/email_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/email_layout_hint"
+                android:layout_margin="@dimen/email_layout_margin"
+                app:counterEnabled="true"
+                app:counterMaxLength="254"
+                app:counterOverflowTextColor="?attr/colorSecondaryVariant"
+                app:endIconTint="@android:color/transparent"
+                app:helperText="@string/email_textfield_hint">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/email_textfield"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/authorise_user_button"
+                android:text="@string/authorise_user_button_text"
+                android:textAllCaps="false"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"/>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Индикатор загрузки -->
+    <ProgressBar
+        android:id="@+id/progressbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

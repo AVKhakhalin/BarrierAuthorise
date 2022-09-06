@@ -7,4 +7,6 @@
     <dimen name="password_layout_margin">8dp</dimen>
     <dimen name="first_name_layout_padding_top">40dp</dimen>
     <dimen name="first_name_layout_margin">8dp</dimen>
+    <dimen name="login_name_layout_padding_top">40dp</dimen>
+    <dimen name="login_name_layout_margin">8dp</dimen>
 </resources>
