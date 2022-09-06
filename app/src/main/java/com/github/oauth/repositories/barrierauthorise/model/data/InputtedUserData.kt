@@ -12,7 +12,7 @@ class InputtedUserData {
     var password: String = ""   // строчные и прописные латинские буквы,
                                 // цифры, спецсимволы. Минимум 8 символов
     //endregion
-    //region Полня НЕ ОБЯЗАТЕЛЬНЫ к заполнению
+    //region Поля НЕ ОБЯЗАТЕЛЬНЫ к заполнению
     var clientId: Int = -1
     var roleId: Int = -1
     var surname: String = ""    // не более 50 символов
