@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
+import com.github.oauth.repositories.barrierauthorise.R
 import com.github.oauth.repositories.barrierauthorise.databinding.FragmentCreateUserBinding
 import com.github.oauth.repositories.barrierauthorise.model.base.BaseFragment
 import com.github.oauth.repositories.barrierauthorise.model.data.AppState
@@ -76,8 +77,12 @@ class CreateUserFragment:
     private fun renderData(appState: AppState) {
         when (appState) {
             is AppState.SuccessCreateNewUser -> {
+                // Изменение внешнего вида фрагмента
+                binding.scrollLayout.visibility = View.VISIBLE
                 binding.progressbar.visibility = View.INVISIBLE
-                Toast.makeText(requireContext(), "Новый пользователь создан", Toast.LENGTH_SHORT).show()
+                // Уведомление пользователя о том, что новый пользователь успешно создан
+                Toast.makeText(requireContext(),
+                    requireContext().getString(R.string.new_user_created), Toast.LENGTH_LONG).show()
             }
             is AppState.Loading -> {
                 // Изменение внешнего вида фрагмента
@@ -85,6 +90,10 @@ class CreateUserFragment:
                 binding.progressbar.visibility = View.VISIBLE
             }
             is AppState.Error -> {
+                // Изменение внешнего вида фрагмента
+                binding.scrollLayout.visibility = View.VISIBLE
+                binding.progressbar.visibility = View.INVISIBLE
+                // Уведомление пользователя об ошибке
                 Toast.makeText(requireContext(), appState.error.message, Toast.LENGTH_SHORT).show()
             }
         }
@@ -107,7 +116,9 @@ class CreateUserFragment:
                 inputtedUserData.email = email.text.toString()
                 inputtedUserData.isAgreed = isAgreed.isChecked
                 inputtedUserData.password = password.text.toString()
-                Toast.makeText(requireContext(), "${inputtedUserData.firstName}\n${inputtedUserData.email}\n${inputtedUserData.isAgreed}\n${inputtedUserData.password}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "${inputtedUserData.firstName}\n${
+                    inputtedUserData.email}\n${inputtedUserData.isAgreed}\n${
+                        inputtedUserData.password}", Toast.LENGTH_LONG).show()
                 viewModel.createNewUser(inputtedUserData)
             }
         }
