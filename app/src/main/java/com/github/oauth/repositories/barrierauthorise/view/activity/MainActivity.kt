@@ -81,5 +81,8 @@ class MainActivity: AppCompatActivity() {
         }
         viewModel.router.exit()
     }
+    fun setIsOnlyOneFragmentExist(isOnlyOneFragmentExist: Boolean) {
+        this.isOnlyOneFragmentExist = isOnlyOneFragmentExist
+    }
     //endregion
 }
