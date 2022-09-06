@@ -29,8 +29,8 @@ class CreateUserFragment:
     private lateinit var email: EditText
     private lateinit var isAgreed: CheckBox
     private lateinit var password: EditText
-    // Кнопка для отправки запроса с информацией о фильмах
-    private lateinit var searchButton: Button
+    // Кнопка для отправки запроса на создание нового пользователя
+    private lateinit var createUserButton: Button
     // Класс для сохранения запроса
     private val settings: Settings = KoinJavaComponent.getKoin().get()
     // newInstance для данного класса
@@ -60,13 +60,9 @@ class CreateUserFragment:
         // Инициализация ViewModel
         initViewModel()
         // Инициализация полей ввода исходной информации и кнопки для отправки запроса
-//        initFieldsAndSearchButton()
-        val inputtedUserData: InputtedUserData = InputtedUserData()
-        inputtedUserData.firstName = "andrey10"
-        inputtedUserData.email = "avkhakh10@mail.ru"
-        inputtedUserData.isAgreed = true
-        inputtedUserData.password = "123dfK93"
-        viewModel.createNewUser(inputtedUserData)
+        initFieldsAndSearchButton()
+        // Инициализация кнопки для отправки запроса
+        initCreateUserButton()
     }
 
     // Инициализация ViewModel
@@ -90,6 +86,29 @@ class CreateUserFragment:
             }
             is AppState.Error -> {
                 Toast.makeText(requireContext(), appState.error.message, Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    // Инициализация полей ввода исходной информации и кнопки для отправки запроса
+    private fun initFieldsAndSearchButton() {
+        firstName = binding.firstNameLayoutTextfield
+        email = binding.emailTextfield
+        isAgreed = binding.isAgreedCheckbox
+        password = binding.passwordTextfield
+    }
+
+    // Инициализация кнопки для отправки запроса
+    private fun initCreateUserButton() {
+        createUserButton = binding.createNewUserButton.also {
+            it.setOnClickListener {
+                val inputtedUserData: InputtedUserData = InputtedUserData()
+                inputtedUserData.firstName = firstName.text.toString()
+                inputtedUserData.email = email.text.toString()
+                inputtedUserData.isAgreed = isAgreed.isChecked
+                inputtedUserData.password = password.text.toString()
+                Toast.makeText(requireContext(), "${inputtedUserData.firstName}\n${inputtedUserData.email}\n${inputtedUserData.isAgreed}\n${inputtedUserData.password}", Toast.LENGTH_SHORT).show()
+                viewModel.createNewUser(inputtedUserData)
             }
         }
     }

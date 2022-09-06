@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="create_new_user_margin">8dp</dimen>
+    <dimen name="is_agreed_title_text_size">20sp</dimen>
+    <dimen name="first_name_layout_margin_top">30dp</dimen>
+    <dimen name="email_layout_margin">8dp</dimen>
+    <dimen name="password_layout_margin">8dp</dimen>
+    <dimen name="first_name_layout_padding_top">40dp</dimen>
+    <dimen name="first_name_layout_margin">8dp</dimen>
 </resources>
