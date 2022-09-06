@@ -3,9 +3,11 @@ package com.github.oauth.repositories.barrierauthorise.repository.api
 import com.github.oauth.repositories.barrierauthorise.model.data.ReceivedUserData
 import kotlinx.coroutines.Deferred
 import retrofit2.http.Body
-import retrofit2.http.PUT
+import retrofit2.http.Headers
+import retrofit2.http.POST
 
 interface ApiService {
-    @PUT("/users/users")
-    fun advancedSearchAsync(@Body body: HashMap<String, Any>): Deferred<ReceivedUserData>
+    @Headers("Content-Type: application/json")
+    @POST("v1/users/users")
+    fun advancedSearchAsync(@Body body: String): Deferred<ReceivedUserData>
 }

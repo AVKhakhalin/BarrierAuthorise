@@ -6,6 +6,7 @@
     android:layout_height="match_parent">
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -18,50 +19,54 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/first_name_layout"
-                style="@style/input_text_layouts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:errorIconTintMode="src_atop">
+                android:hint="@string/first_name_layout_hint"
+                android:paddingTop="@dimen/first_name_layout_padding_top"
+                android:layout_margin="@dimen/first_name_layout_margin"
+                app:counterEnabled="true"
+                app:counterMaxLength="50"
+                app:counterOverflowTextColor="?attr/colorSecondaryVariant"
+                app:endIconTint="@android:color/transparent"
+                app:helperText="@string/first_name_layout_textfield_hint">
 
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/first_name_layout_textfield"
-                    style="@style/input_text_fields"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/first_name_layout_textfield_hint"
-                    android:inputType="textPersonName"
-                    tools:ignore="TouchTargetSizeCheck" />
+                    android:inputType="textPersonName" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/email_layout"
-                style="@style/input_text_layouts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:errorIconTintMode="src_atop">
+                android:hint="@string/email_layout_hint"
+                android:layout_margin="@dimen/email_layout_margin"
+                app:counterEnabled="true"
+                app:counterMaxLength="254"
+                app:counterOverflowTextColor="?attr/colorSecondaryVariant"
+                app:endIconTint="@android:color/transparent"
+                app:helperText="@string/email_textfield_hint">
 
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/email_textfield"
-                    style="@style/input_text_fields"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/email_textfield_hint"
-                    android:inputType="textEmailAddress"
-                    tools:ignore="TouchTargetSizeCheck" />
+                    android:inputType="textEmailAddress" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp">
                 <TextView
                     android:id="@+id/is_agreed_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="start"
-                    android:layout_margin="8dp"
-                    android:text="Согласие на обработку\nперсональных данных:"
-                    android:textSize="20sp"
+                    android:text="@string/is_agreed_title_text"
+                    android:textSize="@dimen/is_agreed_title_text_size"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"/>
 
@@ -70,27 +75,53 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    app:layout_constraintStart_toEndOf="@id/is_agreed_title"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/is_agreed_title"
                     app:layout_constraintBottom_toBottomOf="@id/is_agreed_title"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/password_layout"
-                style="@style/input_text_layouts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:errorIconTintMode="src_atop">
+                android:hint="@string/password_layout_hint"
+                android:layout_margin="@dimen/password_layout_margin"
+                app:counterEnabled="true"
+                app:counterMaxLength="254"
+                app:counterOverflowTextColor="?attr/colorSecondaryVariant"
+                app:endIconMode="password_toggle"
+                app:endIconCheckable="true"
+                app:endIconTintMode="screen"
+                app:endIconTint="@android:color/transparent"
+                app:helperText="@string/password_textfield_hint">
 
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/password_textfield"
-                    style="@style/input_text_fields"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/password_textfield_hint"
-                    android:inputType="textPassword"
-                    tools:ignore="TouchTargetSizeCheck" />
+                    android:inputType="textPassword" />
             </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/create_new_user_button"
+                android:text="@string/create_new_user_button_text"
+                android:textAllCaps="false"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"/>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+
+    <!-- Индикатор загрузки -->
+    <ProgressBar
+        android:id="@+id/progressbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

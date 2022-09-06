@@ -16,17 +16,19 @@ import java.util.*
 
 class RetrofitImpl: DataSource<ReceivedUserData> {
     override suspend fun createNewUser(inputtedUserData: InputtedUserData): ReceivedUserData {
-        val userData = HashMap<String, Any>()
-        userData["first_name"] = inputtedUserData.firstName
-        userData["email"] = inputtedUserData.email
-        userData["is_agreed"] = inputtedUserData.isAgreed
-        userData["password"] = inputtedUserData.password
-        return createNewUserService(BaseInterceptor()).advancedSearchAsync(userData).await()
+        val userData = HashMap<String, String>()
+        userData["\"first_name\""] = " \"" + inputtedUserData.firstName + "\""
+        userData["\"email\""] =  " \"" + inputtedUserData.email + "\""
+        userData["\"is_agreed\""] = " " + inputtedUserData.isAgreed
+        userData["\"password\""] = " \"" + inputtedUserData.password + "\""
+        val correctedUserDataMapToJson: String = "$userData".replace("\"= \"", "\": \"")
+        return createNewUserService(BaseInterceptor()).
+            advancedSearchAsync(correctedUserDataMapToJson).await()
     }
 
     private fun createNewUserService(interceptor: Interceptor): ApiService {
         return createRetrofit(interceptor, BASE_API_URL).
-        create(ApiService::class.java)
+            create(ApiService::class.java)
     }
 
     private fun createRetrofit(interceptor: Interceptor, baseUrlLink: String): Retrofit {

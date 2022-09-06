@@ -3,7 +3,10 @@ package com.github.oauth.repositories.barrierauthorise.utils
 const val CICERONE_NAME: String = "cicerone"
 const val NAME_REMOTE: String = "Remote"
 const val LOG_TAG: String = "mylogs"
-const val BASE_API_URL: String = "https://dev.barrier.ru/v1"
+const val BASE_API_URL: String = "https://dev.barrier.ru/"
+const val MAIN_ACTIVITY_SCOPE: String = "MAIN_ACTIVITY_SCOPE"
+const val START_BUTTONS_FRAGMENT_SCOPE: String = "START_BUTTONS_FRAGMENT_SCOPE"
+const val CREATE_USER_FRAGMENT_SCOPE: String = "CREATE_USER_FRAGMENT_SCOPE"
 
 // Типы сообщений при обмене сообщениями с сервером
 enum class ServerResponseStatusCode {

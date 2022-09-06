@@ -7,14 +7,18 @@ import com.github.oauth.repositories.barrierauthorise.repository.Repository
 import com.github.oauth.repositories.barrierauthorise.repository.RepositoryImpl
 import com.github.oauth.repositories.barrierauthorise.repository.datasource.RetrofitImpl
 import com.github.oauth.repositories.barrierauthorise.repository.settings.Settings
-import com.github.oauth.repositories.barrierauthorise.utils.CICERONE_NAME
-import com.github.oauth.repositories.barrierauthorise.utils.NAME_REMOTE
+import com.github.oauth.repositories.barrierauthorise.utils.*
 import com.github.oauth.repositories.barrierauthorise.utils.network.NetworkStatus
 import com.github.oauth.repositories.barrierauthorise.utils.resources.ResourcesProviderImpl
+import com.github.oauth.repositories.barrierauthorise.view.activity.MainActivityViewModel
+import com.github.oauth.repositories.barrierauthorise.view.fragments.createuser.CreateUserFragmentInteractor
+import com.github.oauth.repositories.barrierauthorise.view.fragments.createuser.CreateUserFragmentViewModel
+import com.github.oauth.repositories.barrierauthorise.view.fragments.startbuttons.StartButtonsFragmentViewModel
 import com.github.terrakok.cicerone.Cicerone
 import com.github.terrakok.cicerone.NavigatorHolder
 import com.github.terrakok.cicerone.Router
 import org.koin.android.ext.koin.androidContext
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
@@ -41,6 +45,32 @@ val application = module {
 }
 
 val screens = module {
+    // Scope для MainActivity
+    scope(named(MAIN_ACTIVITY_SCOPE)) {
+        viewModel {
+            MainActivityViewModel()
+        }
+    }
 
+    // Scope для фрагмента с начальными кнопками выбора действия пользователя
+    scope(named(START_BUTTONS_FRAGMENT_SCOPE)) {
+        viewModel {
+            StartButtonsFragmentViewModel()
+        }
+    }
+
+    // Scope для фрагмента с регистрацией нового пользователя
+    scope(named(CREATE_USER_FRAGMENT_SCOPE)) {
+        scoped {
+            CreateUserFragmentInteractor(
+                get(named(NAME_REMOTE)),
+                ResourcesProviderImpl(get()),
+                NetworkStatus(get())
+            )
+        }
+        viewModel {
+            CreateUserFragmentViewModel(getScope(CREATE_USER_FRAGMENT_SCOPE).get(), get())
+        }
+    }
 }
 

@@ -1,8 +1,20 @@
 <resources>
+    <!-- Errors   -->
+    <string name="error_needs_internet_connection">Нужно установить связь с Интернетом</string>
+    <string name="help_needs_internet_connection">Для регистрации нового пользователя , пожалуйста, установите связь с Интернетом</string>
+    <string name="is_agreed_title_text">Согласие на обработку\nперсональных данных:</string>
+    <string name="create_new_user_button_text">Создать пользователя</string>
+    <string name="password_layout_hint">Введите пароль</string>
+    <string name="email_layout_hint">Введите e-mail</string>
+    <string name="first_name_layout_hint">Введите своё имя</string>
+
+
     <string name="app_name">BarrierAuthorise</string>
     <string name="create_new_user_text">СОЗДАТЬ нового пользователя</string>
     <string name="authorise_user_text">АВТОРИЗОВАТЬ пользователя</string>
     <string name="first_name_layout_textfield_hint">Имя</string>
     <string name="email_textfield_hint">E-mail</string>
     <string name="password_textfield_hint">Пароль</string>
+    <string name="new_user_created">Новый пользователь создан</string>
+
 </resources>
