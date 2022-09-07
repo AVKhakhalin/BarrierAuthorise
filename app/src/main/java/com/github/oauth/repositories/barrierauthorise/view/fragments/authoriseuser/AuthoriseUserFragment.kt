@@ -2,6 +2,7 @@ package com.github.oauth.repositories.barrierauthorise.view.fragments.authoriseu
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -13,6 +14,7 @@ import com.github.oauth.repositories.barrierauthorise.model.data.AppState
 import com.github.oauth.repositories.barrierauthorise.model.data.InputtedUserData
 import com.github.oauth.repositories.barrierauthorise.repository.settings.Settings
 import com.github.oauth.repositories.barrierauthorise.utils.AUTHORISE_USER_FRAGMENT_SCOPE
+import com.github.oauth.repositories.barrierauthorise.utils.LOG_TAG
 import org.koin.core.qualifier.named
 import org.koin.core.scope.Scope
 import org.koin.java.KoinJavaComponent
@@ -26,7 +28,6 @@ class AuthoriseUserFragment:
     private lateinit var showAuthoriseUserFragmentScope: Scope
     // Поля для ввода данных о пользователе
     private lateinit var login: EditText
-    private lateinit var email: EditText
     private lateinit var password: EditText
     // Кнопка для отправки запроса на создание нового пользователя
     private lateinit var authoriseUserButton: Button
@@ -80,8 +81,11 @@ class AuthoriseUserFragment:
                 binding.progressbar.visibility = View.INVISIBLE
                 // Уведомление пользователя о том, что пользователь успешно авторизован
                 Toast.makeText(requireContext(),
-                    requireContext().getString(R.string.authorise_user_completed),
+                    "${requireContext().getString(R.string.authorise_user_completed)
+                    }\n${requireContext().getString(R.string.tokens_show_place)}",
                     Toast.LENGTH_LONG).show()
+                Log.d(LOG_TAG, "Токены: \naccess:${appState.data?.tokens?.access}\nrefresh: ${
+                    appState.data?.tokens?.refresh}\nexp: ${appState.data?.tokens?.exp}")
             }
             is AppState.Loading -> {
                 // Изменение внешнего вида фрагмента
@@ -102,7 +106,6 @@ class AuthoriseUserFragment:
     // Инициализация полей ввода исходной информации и кнопки для отправки запроса
     private fun initFieldsAndSearchButton() {
         login = binding.loginLayoutTextfield
-        email = binding.emailTextfield
         password = binding.passwordTextfield
     }
 
@@ -111,11 +114,10 @@ class AuthoriseUserFragment:
         authoriseUserButton = binding.authoriseUserButton.also {
             it.setOnClickListener {
                 val inputtedUserData: InputtedUserData = InputtedUserData()
-                inputtedUserData.firstName = login.text.toString()
-                inputtedUserData.email = email.text.toString()
+                inputtedUserData.email = login.text.toString()
                 inputtedUserData.password = password.text.toString()
-                Toast.makeText(requireContext(), "${inputtedUserData.firstName}\n${
-                    inputtedUserData.email}\n${inputtedUserData.isAgreed}\n${
+                Toast.makeText(requireContext(),
+                    "${inputtedUserData.email}\n${
                     inputtedUserData.password}", Toast.LENGTH_LONG).show()
                 viewModel.authoriseUser(inputtedUserData)
             }

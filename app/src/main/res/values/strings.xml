@@ -7,6 +7,7 @@
     <string name="password_layout_hint">Введите пароль</string>
     <string name="email_layout_hint">Введите e-mail</string>
     <string name="first_name_layout_hint">Введите своё имя</string>
+    <string name="tokens_show_place">Токены представлены в логе</string>
 
 
     <string name="app_name">BarrierAuthorise</string>
@@ -17,8 +18,8 @@
     <string name="password_textfield_hint">Пароль</string>
     <string name="new_user_created">Новый пользователь создан</string>
     <string name="authorise_user_button_text">Авторизоватьcя</string>
-    <string name="login_name_layout_hint">Введите свой логин (имя)</string>
-    <string name="login_name_layout_helper_text">Логин</string>
+    <string name="login_name_layout_hint">Введите свой логин (E-mail)</string>
+    <string name="login_name_layout_helper_text">Логин (E-mail)</string>
     <string name="authorise_user_completed">Пользователь авторизован</string>
 
 </resources>

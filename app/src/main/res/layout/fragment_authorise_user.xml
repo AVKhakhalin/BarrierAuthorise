@@ -59,25 +59,6 @@
                     android:inputType="textPassword" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/email_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/email_layout_hint"
-                android:layout_margin="@dimen/email_layout_margin"
-                app:counterEnabled="true"
-                app:counterMaxLength="254"
-                app:counterOverflowTextColor="?attr/colorSecondaryVariant"
-                app:endIconTint="@android:color/transparent"
-                app:helperText="@string/email_textfield_hint">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/email_textfield"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress" />
-            </com.google.android.material.textfield.TextInputLayout>
-
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/authorise_user_button"
                 android:text="@string/authorise_user_button_text"
