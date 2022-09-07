@@ -28,7 +28,7 @@ class AuthoriseUserFragmentInteractor(
             AppState {
         val appState: AppState = if (networkStatus.isOnline()) {
             // Кодирование в Base64 логина и пароля
-            val byteEncodedData: ByteArray? = Base64.encode("${inputtedUserData.firstName}:${
+            val byteEncodedData: ByteArray? = Base64.encode("${inputtedUserData.email}:${
                 inputtedUserData.password}".toByteArray(Charset.defaultCharset()), Base64.NO_WRAP)
             val stringEncodedData: String? = byteEncodedData?.toString(Charset.defaultCharset())
             AppState.SuccessAuthoriseUser(
