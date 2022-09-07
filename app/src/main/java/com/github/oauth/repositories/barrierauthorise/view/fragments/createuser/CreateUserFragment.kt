@@ -106,6 +106,13 @@ class CreateUserFragment:
         email = binding.emailTextfield
         isAgreed = binding.isAgreedCheckbox
         password = binding.passwordTextfield
+
+        // Временная начальная установка значений полей
+        firstName.setText("Proba")
+        email.setText("sd@df.ru")
+        isAgreed.isChecked = true
+        password.setText("sd_DSd~23")
+
     }
 
     // Инициализация кнопки для отправки запроса

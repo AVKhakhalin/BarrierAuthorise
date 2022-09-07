@@ -32,7 +32,8 @@ class CreateUserFragmentInteractor(
             userData["\"is_agreed\""] = " " + inputtedUserData.isAgreed
             userData["\"password\""] = " \"" + inputtedUserData.password + "\""
             val correctedUserDataMapToJson: String =
-                "$userData".replace("\"= \"", "\": \"")
+                "$userData".replace("\"= \"", "\": \"").
+                replace("\"is_agreed\"= ", "\"is_agreed\": ")
             AppState.SuccessCreateNewUser(
                 remoteRepository.createNewUser(correctedUserDataMapToJson))
         } else {
@@ -44,25 +45,27 @@ class CreateUserFragmentInteractor(
         }
         // Сохранение данных в класс Settings
         (appState as AppState.SuccessCreateNewUser).data?.let {
-            settings.birthDate = it.birthDate ?: ""
-            settings.checkIn = it.checkIn ?: ""
-            settings.email = it.email
-            settings.clientId = it.clientId
-            settings.gender = it.gender ?: ""
-            settings.createdAt = it.createdAt ?: ""
-            settings.firstName = it.firstName
-            settings.isAgreed = it.isAgreed
-            settings.isEnabled = it.isEnabled
-            settings.isOffer = it.isOffer
-            settings.lastActivity = it.lastActivity ?: ""
-            settings.mobile = it.mobile ?: ""
-            settings.patronymic = it.patronymic ?: ""
-            settings.roleId = it.roleId
-            settings.surname = it.surname ?: ""
-            settings.updateAt = it.updateAt ?: ""
-            settings.userId = it.userId
-            settings.uuid = it.uuid ?: ""
-            settings.welcome = it.welcome ?: ""
+            it.user?.let { userData ->
+                settings.birthDate = userData.birthDate ?: ""
+                settings.checkIn = userData.checkIn ?: ""
+                settings.email = userData.email
+                settings.clientId = userData.clientId
+                settings.gender = userData.gender ?: ""
+                settings.createdAt = userData.createdAt ?: ""
+                settings.firstName = userData.firstName
+                settings.isAgreed = userData.isAgreed
+                settings.isEnabled = userData.isEnabled
+                settings.isOffer = userData.isOffer
+                settings.lastActivity = userData.lastActivity ?: ""
+                settings.mobile = userData.mobile ?: ""
+                settings.patronymic = userData.patronymic ?: ""
+                settings.roleId = userData.roleId
+                settings.surname = userData.surname ?: ""
+                settings.updateAt = userData.updateAt ?: ""
+                settings.userId = userData.userId
+                settings.uuid = userData.uuid ?: ""
+                settings.welcome = userData.welcome ?: ""
+            }
         }
         return appState
     }
