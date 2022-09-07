@@ -5,8 +5,10 @@ import android.util.Log
 import com.github.oauth.repositories.barrierauthorise.utils.LOG_TAG
 import com.github.oauth.repositories.barrierauthorise.utils.ServerResponseStatusCode
 import okhttp3.Interceptor
+import okhttp3.Request
 import okhttp3.Response
 import java.io.IOException
+
 
 /**
  * Custom interceptor to intercept basic responses and to show basic errors to the user
