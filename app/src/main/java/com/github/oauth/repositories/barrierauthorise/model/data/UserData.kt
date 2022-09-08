@@ -16,10 +16,10 @@ class UserData(
     @field:SerializedName("email") val email: String,
     @field:SerializedName("mobile") val mobile: String?,
     @field:SerializedName("uuid") val uuid: String?,
-    @field:SerializedName("is_offer") val isOffer: Boolean?,
-    @field:SerializedName("is_enabled") val isEnabled: Boolean?,
-    @field:SerializedName("is_agreed") val isAgreed: Boolean,
-    @field:SerializedName("last_activity") val lastActivity: String?,
-    @field:SerializedName("created_at") val createdAt: String?,
-    @field:SerializedName("update_at") val updateAt: String?
+    @field:SerializedName("is_offer") val isOffer: Int,
+    @field:SerializedName("is_enabled") val isEnabled: Int,
+    @field:SerializedName("is_agreed") val isAgreed: Int,
+    @field:SerializedName("last_activity") val lastActivity: String,
+    @field:SerializedName("created_at") val createdAt: String,
+    @field:SerializedName("update_at") val updateAt: String
 )

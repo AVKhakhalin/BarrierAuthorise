@@ -71,6 +71,7 @@ dependencies {
     implementation Retrofit.rxJava2
     implementation Retrofit.interceptor // Версия интерсептора должна быть такой же как и версия okHttp
     implementation Retrofit.coroutinesAdapter
+
     // Coroutines
     implementation Coroutines.android
     // Koin

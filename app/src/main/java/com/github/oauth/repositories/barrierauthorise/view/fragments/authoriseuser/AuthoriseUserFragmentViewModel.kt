@@ -20,9 +20,9 @@ class AuthoriseUserFragmentViewModel(
 
     fun authoriseUser(inputtedUserData: InputtedUserData) {
         // Сохранение данных об авторизовывающемся пользователе в класс Settings
-        settings.firstName = inputtedUserData.firstName
-        settings.email = inputtedUserData.email
-        settings.password = inputtedUserData.password
+        settings.firstName = inputtedUserData.first_name.toString()
+        settings.email = inputtedUserData.email.toString()
+        settings.password = inputtedUserData.password.toString()
 
         // Авторизация пользователя
         _mutableLiveData.value = AppState.Loading(null)

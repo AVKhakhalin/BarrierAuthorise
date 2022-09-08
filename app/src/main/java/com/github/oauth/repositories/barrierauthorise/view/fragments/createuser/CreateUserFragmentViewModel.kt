@@ -20,10 +20,10 @@ class CreateUserFragmentViewModel(
 
     fun createNewUser(inputtedUserData: InputtedUserData) {
         // Сохранение данных о пользователей в класс Settings
-        settings.firstName = inputtedUserData.firstName
-        settings.email = inputtedUserData.email
-        settings.isAgreed = inputtedUserData.isAgreed
-        settings.password = inputtedUserData.password
+        settings.firstName = inputtedUserData.first_name.toString()
+        settings.email = inputtedUserData.email.toString()
+        settings.isAgreed = inputtedUserData.is_agreed
+        settings.password = inputtedUserData.password.toString()
 
         // Регистрация нового пользователя
         _mutableLiveData.value = AppState.Loading(null)

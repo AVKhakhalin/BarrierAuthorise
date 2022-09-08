@@ -1,5 +1,6 @@
 package com.github.oauth.repositories.barrierauthorise.repository.datasource
 
+import com.github.oauth.repositories.barrierauthorise.model.data.InputtedUserData
 import com.github.oauth.repositories.barrierauthorise.model.data.ReceivedUserData
 import com.github.oauth.repositories.barrierauthorise.model.data.ReceivedUserTokensData
 import com.github.oauth.repositories.barrierauthorise.repository.api.ApiService
@@ -12,31 +13,40 @@ import okhttp3.Protocol
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.io.ByteArrayOutputStream
+import java.nio.charset.StandardCharsets.UTF_8
 import java.util.*
+import java.util.zip.GZIPOutputStream
 
 class RetrofitImpl: DataSource<ReceivedUserData, ReceivedUserTokensData> {
     //region Создание нового ползователя
-    override suspend fun createNewUser(userData: String): ReceivedUserData {
+    override suspend fun createNewUser(userData: InputtedUserData): ReceivedUserData {
+        val headerMap: MutableMap<String, String> = HashMap()
+        headerMap["Content-Type"] = "application/json"
+//        headerMap["Accept-Encoding"] = "gzip"
+//        headerMap["Content-Encoding"] = "gzip"
+//        headerMap["Content-Type"] = "multipart/form-data"
+//        headerMap["Content-Type"] = "application/json; charset=utf-8"
         return createNewUserService(BaseInterceptor()).
             createNewUserAsync(userData).await()
+//            createNewUserAsync(headerMap, userData).await()
     }
     //endregion
 
     //region Авторизация существующего пользователя
     override suspend fun authoriseUser(userData: String): ReceivedUserTokensData {
         return createNewUserService(BaseInterceptor()).
-        authoriseUserAsync(userData).await()
+            authoriseUserAsync(userData).await()
     }
     //endregion
 
     //region Ретрофит
     private fun createNewUserService(interceptor: Interceptor): ApiService {
-        return createRetrofit(interceptor, BASE_API_URL).
-            create(ApiService::class.java)
+        return createRetrofit(interceptor).create(ApiService::class.java)
     }
-    private fun createRetrofit(interceptor: Interceptor, baseUrlLink: String): Retrofit {
+    private fun createRetrofit(interceptor: Interceptor): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(baseUrlLink)
+            .baseUrl(BASE_API_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .client(createOkHttpClient(interceptor))
@@ -52,4 +62,10 @@ class RetrofitImpl: DataSource<ReceivedUserData, ReceivedUserTokensData> {
         return httpClient.build()
     }
     //endregion
+}
+
+fun gzip(content: String): ByteArray {
+    val bos = ByteArrayOutputStream()
+    GZIPOutputStream(bos).bufferedWriter(UTF_8).use { it.write(content) }
+    return bos.toByteArray()
 }
