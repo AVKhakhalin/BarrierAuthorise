@@ -1,5 +1,6 @@
 package com.github.oauth.repositories.barrierauthorise.view.fragments.createuser
 
+import android.util.Log
 import android.widget.Toast
 import com.github.oauth.repositories.barrierauthorise.R
 import com.github.oauth.repositories.barrierauthorise.model.base.InteractorCreateUser
@@ -9,8 +10,10 @@ import com.github.oauth.repositories.barrierauthorise.model.data.ReceivedUserDat
 import com.github.oauth.repositories.barrierauthorise.model.data.ReceivedUserTokensData
 import com.github.oauth.repositories.barrierauthorise.repository.Repository
 import com.github.oauth.repositories.barrierauthorise.repository.settings.Settings
+import com.github.oauth.repositories.barrierauthorise.utils.LOG_TAG
 import com.github.oauth.repositories.barrierauthorise.utils.network.NetworkStatus
 import com.github.oauth.repositories.barrierauthorise.utils.resources.ResourcesProvider
+import com.google.gson.Gson
 import org.koin.java.KoinJavaComponent
 
 class CreateUserFragmentInteractor(
@@ -25,17 +28,8 @@ class CreateUserFragmentInteractor(
     override suspend fun createNewUser(inputtedUserData: InputtedUserData):
             AppState {
         val appState: AppState = if (networkStatus.isOnline()) {
-            // Конвертирование данных в JSON формат
-            val userData = HashMap<String, String>()
-            userData["\"first_name\""] = " \"" + inputtedUserData.firstName + "\""
-            userData["\"email\""] =  " \"" + inputtedUserData.email + "\""
-            userData["\"is_agreed\""] = " " + inputtedUserData.isAgreed
-            userData["\"password\""] = " \"" + inputtedUserData.password + "\""
-            val correctedUserDataMapToJson: String =
-                "$userData".replace("\"= \"", "\": \"").
-                replace("\"is_agreed\"= ", "\"is_agreed\": ")
             AppState.SuccessCreateNewUser(
-                remoteRepository.createNewUser(correctedUserDataMapToJson))
+                remoteRepository.createNewUser(inputtedUserData))
         } else {
             Toast.makeText(resourcesProviderImpl.getContext(),
                 resourcesProviderImpl.getString(R.string.help_needs_internet_connection),
@@ -53,9 +47,9 @@ class CreateUserFragmentInteractor(
                 settings.gender = userData.gender ?: ""
                 settings.createdAt = userData.createdAt ?: ""
                 settings.firstName = userData.firstName
-                settings.isAgreed = userData.isAgreed
-                settings.isEnabled = userData.isEnabled
-                settings.isOffer = userData.isOffer
+                settings.isAgreed = userData.isAgreed == 1
+                settings.isEnabled = userData.isEnabled == 1
+                settings.isOffer = userData.isOffer == 1
                 settings.lastActivity = userData.lastActivity ?: ""
                 settings.mobile = userData.mobile ?: ""
                 settings.patronymic = userData.patronymic ?: ""

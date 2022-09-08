@@ -80,7 +80,7 @@ class AuthoriseUserFragment:
                 binding.scrollLayout.visibility = View.VISIBLE
                 binding.progressbar.visibility = View.INVISIBLE
                 // Уведомление пользователя о том, что пользователь успешно авторизован
-                Toast.makeText(requireContext(),
+                Toast.makeText(requireActivity(),
                     "${requireContext().getString(R.string.authorise_user_completed)
                     }\n${requireContext().getString(R.string.tokens_show_place)}",
                     Toast.LENGTH_LONG).show()
@@ -97,7 +97,7 @@ class AuthoriseUserFragment:
                 binding.scrollLayout.visibility = View.VISIBLE
                 binding.progressbar.visibility = View.INVISIBLE
                 // Уведомление пользователя об ошибке
-                Toast.makeText(requireContext(), appState.error.message, Toast.LENGTH_LONG).show()
+                Toast.makeText(requireActivity(), appState.error.message, Toast.LENGTH_LONG).show()
             }
             else -> {}
         }
@@ -116,7 +116,7 @@ class AuthoriseUserFragment:
                 val inputtedUserData: InputtedUserData = InputtedUserData()
                 inputtedUserData.email = login.text.toString()
                 inputtedUserData.password = password.text.toString()
-                Toast.makeText(requireContext(),
+                Toast.makeText(requireActivity(),
                     "${inputtedUserData.email}\n${
                     inputtedUserData.password}", Toast.LENGTH_LONG).show()
                 viewModel.authoriseUser(inputtedUserData)

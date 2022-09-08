@@ -2,6 +2,7 @@ package com.github.oauth.repositories.barrierauthorise.view.fragments.createuser
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.CheckBox
@@ -14,9 +15,11 @@ import com.github.oauth.repositories.barrierauthorise.model.data.AppState
 import com.github.oauth.repositories.barrierauthorise.model.data.InputtedUserData
 import com.github.oauth.repositories.barrierauthorise.repository.settings.Settings
 import com.github.oauth.repositories.barrierauthorise.utils.CREATE_USER_FRAGMENT_SCOPE
+import com.github.oauth.repositories.barrierauthorise.utils.LOG_TAG
 import org.koin.core.qualifier.named
 import org.koin.core.scope.Scope
 import org.koin.java.KoinJavaComponent
+
 
 class CreateUserFragment:
     BaseFragment<FragmentCreateUserBinding>(FragmentCreateUserBinding::inflate) {
@@ -81,8 +84,29 @@ class CreateUserFragment:
                 binding.scrollLayout.visibility = View.VISIBLE
                 binding.progressbar.visibility = View.INVISIBLE
                 // Уведомление пользователя о том, что новый пользователь успешно создан
-                Toast.makeText(requireContext(),
-                    requireContext().getString(R.string.new_user_created), Toast.LENGTH_LONG).show()
+                Toast.makeText(requireActivity(),
+                    requireActivity().getString(R.string.new_user_created), Toast.LENGTH_LONG).show()
+                Log.d(LOG_TAG, "Новый пользователь создан:\n" +
+                    "user_id: ${appState.data?.user?.userId}\n" +
+                    "client_id: ${appState.data?.user?.clientId}\n" +
+                    "role_id: ${appState.data?.user?.roleId}\n" +
+                    "check_in: ${appState.data?.user?.checkIn}\n" +
+                    "surname: ${appState.data?.user?.surname}\n" +
+                    "first_name: ${appState.data?.user?.firstName}\n" +
+                    "patronymic: ${appState.data?.user?.patronymic}\n" +
+                    "birth_date: ${appState.data?.user?.birthDate}\n" +
+                    "gender: ${appState.data?.user?.gender}\n" +
+                    "welcome: ${appState.data?.user?.welcome}\n" +
+                    "email: ${appState.data?.user?.email}\n" +
+                    "mobile: ${appState.data?.user?.mobile}\n" +
+                    "uuid: ${appState.data?.user?.uuid}\n" +
+                    "is_offer: ${appState.data?.user?.isOffer}\n" +
+                    "is_enabled: ${appState.data?.user?.isEnabled}\n" +
+                    "is_agreed: ${appState.data?.user?.isAgreed}\n" +
+                    "last_activity: ${appState.data?.user?.lastActivity}\n" +
+                    "created_at: ${appState.data?.user?.createdAt}\n" +
+                    "update_at: ${appState.data?.user?.updateAt}\n" +
+                    "password: ${settings.password}\n")
             }
             is AppState.Loading -> {
                 // Изменение внешнего вида фрагмента
@@ -94,9 +118,13 @@ class CreateUserFragment:
                 binding.scrollLayout.visibility = View.VISIBLE
                 binding.progressbar.visibility = View.INVISIBLE
                 // Уведомление пользователя об ошибке
-                Toast.makeText(requireContext(), appState.error.message, Toast.LENGTH_LONG).show()
+                Toast.makeText(requireActivity(), "${appState.error.message}",
+                    Toast.LENGTH_LONG).show()
+                Log.d(LOG_TAG, "ОШИБКА: ${appState.error.message}")
             }
-            else -> {}
+            else -> {
+                Toast.makeText(requireActivity(), "Else", Toast.LENGTH_LONG).show()
+            }
         }
     }
 
@@ -106,13 +134,6 @@ class CreateUserFragment:
         email = binding.emailTextfield
         isAgreed = binding.isAgreedCheckbox
         password = binding.passwordTextfield
-
-        // Временная начальная установка значений полей
-        firstName.setText("Proba")
-        email.setText("sd@df.ru")
-        isAgreed.isChecked = true
-        password.setText("sd_DSd~23")
-
     }
 
     // Инициализация кнопки для отправки запроса
@@ -120,12 +141,12 @@ class CreateUserFragment:
         createUserButton = binding.createNewUserButton.also {
             it.setOnClickListener {
                 val inputtedUserData: InputtedUserData = InputtedUserData()
-                inputtedUserData.firstName = firstName.text.toString()
+                inputtedUserData.first_name = firstName.text.toString()
                 inputtedUserData.email = email.text.toString()
-                inputtedUserData.isAgreed = isAgreed.isChecked
+                inputtedUserData.is_agreed = isAgreed.isChecked
                 inputtedUserData.password = password.text.toString()
-                Toast.makeText(requireContext(), "${inputtedUserData.firstName}\n${
-                    inputtedUserData.email}\n${inputtedUserData.isAgreed}\n${
+                Toast.makeText(requireActivity(), "${inputtedUserData.first_name}\n${
+                    inputtedUserData.email}\n${inputtedUserData.is_agreed}\n${
                         inputtedUserData.password}", Toast.LENGTH_LONG).show()
                 viewModel.createNewUser(inputtedUserData)
             }
